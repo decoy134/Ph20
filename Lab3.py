@@ -1,6 +1,7 @@
 import math
 
 h0 = 0.1   # The default used h0
+N = 200    # The default used N steps of the Euler method
 
 # This function writes a one dimensional list to a file with name f_name.
 def write_to_file(f_name, lst):
@@ -143,10 +144,11 @@ def impEnergyN(x0, v0, h, n):
 
 def main():
     global h0
+    global N
     
-    euler = eulerMethodN(0, 10, h0, 200)
-    spring = springMethodN(0, 10, h0, 200)
-    P2 = spring_global_error(0, 10, h0, 200)
+    euler = eulerMethodN(0, 10, h0, N)
+    spring = springMethodN(0, 10, h0, N)
+    P2 = spring_global_error(0, 10, h0, N)
     
     # Problem 1 files
     write_to_file("euler_pos.txt", euler[0])
@@ -163,17 +165,17 @@ def main():
     num = 1
     P3 = []
     for i in range(10):
-        P3.append(lst_max(spring_global_error(0, 10, h0 / num, 200)[0]))
+        P3.append(lst_max(spring_global_error(0, 10, h0 / num, N)[0]))
         num *= 2
     write_to_file("h_scale.txt", P3)
     
     # Problem 4 files
-    write_to_file("euler_energy.txt", sprEnergyN(0, 10, h0, 200))
+    write_to_file("euler_energy.txt", sprEnergyN(0, 10, h0, N))
     
     # Problem 5 files
-    imp_err = implicitError(0, 10, h0, 200)
+    imp_err = implicitError(0, 10, h0, N)
     write_to_file("imp_pos_error.txt", imp_err[0])
     write_to_file("imp_vel_error.txt", imp_err[1])
-    write_to_file("implicit_energy.txt", impEnergyN(0, 10, h0, 200))
+    write_to_file("implicit_energy.txt", impEnergyN(0, 10, h0, N))
     
 main()
